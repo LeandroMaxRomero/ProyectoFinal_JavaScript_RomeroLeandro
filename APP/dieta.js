@@ -1,3 +1,7 @@
+//! NO LLEGUÉ A ARREGLAR ESTA PARTE DEL CÓDIGO.
+//* LA IDEA ERA CONSUMIR UNA API QUE ME DEVUELVA LOS VALORES CALÓRICOS DE LOS ALIMENTOS ENVIADOS COMO PETICIÓN.
+//* APLICARÉ ESTE MÉTODO APENAS DESCUBRA CÓMO MANIPULARLO Y ACTUALIZARÉ EL CÓDIGO.
+
 
 //* Creo un array vacío preexistente para pushearle los objetos correspondientes.
 let array_objeto_productos = [];
@@ -80,25 +84,47 @@ function agregar_dieta(e){
 
 
 
-    //! Botones de eliminación
-        //* Declaro una variable para todos los botones de eliminación.
-        let botones_quitar = document.querySelectorAll(".boton_quitar");
-    
-        //* Utilizo un for..of para recorrer todos los botones y le aplico una función.
-        for(let boton of botones_quitar){
-            boton.addEventListener("click", borrar_producto);
+//! Botones de eliminación
+//* Declaro una variable para todos los botones de eliminación.
+let botones_quitar = document.querySelectorAll(".boton_quitar");
+
+//* Utilizo un for..of para recorrer todos los botones y le aplico una función.
+for(let boton of botones_quitar){
+        boton.addEventListener("click", borrar_producto);
         }
-        
-        //* Dicha función utiliza el elemento "e" y "target" para identificar al botón seleccionado.
-        function borrar_producto(e){
-            //* declaro al nodo hijo (botón) y padre (li) para aplicar la eliminación del nodo padre.
-            let hijo = e.target;
-            let padre = hijo.parentNode;
-        
-            //* Elimino al nodo padre.
-            padre.remove();
     
-            //* Resto de la suma total, el valor del producto eliminado
+//* Dicha función utiliza el elemento "e" y "target" para identificar al botón seleccionado.
+function borrar_producto(e){
+
+    //* declaro al nodo hijo (botón) y padre (li) para aplicar la eliminación del nodo padre.
+    let hijo = e.target;
+    let padre = hijo.parentNode;
+    
+    //* Elimino al nodo padre.
+    padre.remove();
             
-            //! Tengo que programar parq que el botón borre al nodo padre y le reste al total de la suma de kilocalorías
+    //! Tengo que programar parq que el botón borre al nodo padre y le reste al total de la suma de kilocalorías
+    }
+
+
+//* Datos del clima en el header
+let clima = document.getElementById("clima");
+
+fetch("https://api.openweathermap.org/data/2.5/weather?q=Buenos Aires&lang=es&units=metric&appid=991dfe4bcda1a40d3917c35468a2109d")
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    
+
+        const{main, weather} = data;
+        const icono = `https://openweathermap.org/img/wn/${weather[0]["icon"]}@2x.png`;
+
+        const datos_clima = `
+                        <img src="https://openweathermap.org/img/wn/${weather[0]["icon"]}@2x.png" class="imagen-clima">
+                        <h2 class="card-title">${data.main.temp} °C</h2>
+                        <p> Descripción: ${data.weather[0].description}</p>
+                        `;
+
+                        clima.innerHTML = datos_clima;
         }
+    )
